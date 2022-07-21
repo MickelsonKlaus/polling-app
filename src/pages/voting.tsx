@@ -87,7 +87,7 @@ const Voting = () => {
                 })}
             {poll.title && Cookies.get('pollCreatedByCurrentUser') && <button type="button" className="outline-none mt-10 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200" onClick={handleToggle}>{closing ? "Closing poll" : closed ? "Poll closed, Re-open" : "Close poll"}</button>}
             {(Cookies.get('pollCreatedByCurrentUser') || poll.closed) && <p className="text-white mt-5 text-xs font-medium">Votes: {totalVotes}</p>}
-            {poll.closed && <p className="text-white mt-3 text-xs font-medium opacity-70">This poll has been closed. Here is the results</p>}
+            {poll.closed && <p className="text-white mt-3 text-xs font-medium opacity-70">This poll has been closed. Here are the results</p>}
         </section>
     )
 }
