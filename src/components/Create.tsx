@@ -66,7 +66,7 @@ const Create = () => {
         <div>
             <form onSubmit={handleSubmit}>
                 <textarea required name="question" onChange={handleTyping} rows={1} placeholder="Poll" className="text-xl block w-full bg-transparent pb-3 overflow-hidden sm:text-2xl lg:text-3xl mb-10 text-gray-400 border-b-2 border-gray-400 px-3 outline-none resize-none first-letter:capitalize break-words h-auto" />
-                <div className="grid grid-cols-[1fr,auto,1fr] gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr,auto,1fr] gap-5">
                     {Array(optionNum).fill("").map((input: string, i: number) => {
                         return <Input key={i} handleChange={handleChange} index={i} />
                     })}
