@@ -72,7 +72,9 @@ const Create = () => {
                     })}
                 </div>
                 <button type="button" disabled={creating} className="outline-none mt-5 w-fit text-sm text-gray-400 transition-transform hover:scale-105 duration-200" onClick={addOption}>+ Add option</button>
-                <button type="submit" disabled={creating} className="outline-none mt-5 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200">{creating ? "Creating" : "Create"}</button>
+                <button type="submit" disabled={creating} className="outline-none mt-5 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200" style={{
+                    opacity: creating ? "opacity-50" : "opacity-100"
+                }}>{creating ? "Creating" : "Create"}</button>
             </form>
         </div>
     )
