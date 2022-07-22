@@ -101,7 +101,7 @@ const Voting = () => {
                 {poll.title && isCreatedByCurrentUser && <button type="button" style={{
                     opacity: closing ? "opacity-50" : "opacity-100"
                 }} disabled={closing} className="outline-none mt-10 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200" onClick={handleToggle}>{closing ? poll.closed ? "Opening poll" : "Closing poll" : closed ? "Poll closed, Re-open" : "Close poll"}</button>}
-                {(isCreatedByCurrentUser || poll.closed) && <p className="text-white mt-5 text-xs font-medium">Votes: {totalVotes}</p>}
+                {(isCreatedByCurrentUser || poll.closed || voted) && <p className="text-white mt-5 text-xs font-medium">Votes: {totalVotes}</p>}
                 {poll.closed && <p className="text-white mt-3 text-xs font-medium opacity-70">This poll has been closed. Here are the results</p>}</> : loading && !err ? <p className="text-white mt-5 font-medium text-center">Loading...</p> : <p className="text-white mt-5 font-medium text-center">Poll not found</p>}
         </section>
     )
