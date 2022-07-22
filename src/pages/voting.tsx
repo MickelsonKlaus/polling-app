@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ref, onValue, update } from "firebase/database";
 import { db } from "../firebase"
 import Cookies from 'js-cookie'
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 interface Poll {
     closed: boolean
@@ -13,7 +13,8 @@ interface Poll {
 }
 
 const Voting = () => {
-    let isCreatedByCurrentUser = Cookies.get('pollCreatedByCurrentUser') ? true : false
+    let { state }: any = useLocation()
+    let isCreatedByCurrentUser = Cookies.get('pollCreatedByCurrentUser') ? true : state.pollCreatedByCurrentUser ? true : false
     let params = useParams();
     let [voted, setVoted] = useState<boolean>(false);
     let [closing, setClosing] = useState<boolean>(false);
@@ -33,7 +34,7 @@ const Voting = () => {
         const pollRef = ref(db, 'polls/' + params.pollId);
         onValue(pollRef, (snapshot) => {
             const data = snapshot.val();
-            console.log(data);
+            //console.log(data);
             if (data) {
                 setPoll(data)
                 setLoading(false)
@@ -81,13 +82,13 @@ const Voting = () => {
     return (
         <section className="max-w-lg mx-auto block">
             <Link to="/" className="text-xs block mb-5 font-medium text-white bg-[#1C538E] w-fit p-2 opacity-70 transition-transform hover:scale-105 duration-200 hover:opacity-100">Back to home</Link>
-            {!loading && !err ? <>{poll.title && <h1 className="text-xl font-medium block w-full bg-transparent pb-3 sm:text-2xl lg:text-3xl mb-10 text-white border-b border-gray-400">{poll.title}</h1>}
+            {!loading && !err ? <>{poll.title && <h1 className="text-xl font-medium block w-full bg-transparent pb-3 sm:text-2xl lg:text-3xl mb-10 text-white border-b border-gray-400 first-letter:capitalize">{poll.title}</h1>}
                 {((isCreatedByCurrentUser || poll.closed) || Cookies.get('voted')) ? poll.options.map((value: string, i: number) => {
                     return <div key={i} className="block w-full text-white font-medium mb-3 rounded-sm text-sm  border border-[#1C538E] relative">
                         <span style={{
                             width: `${((poll.votes[i] / totalVotes) * 100).toFixed()}%`
                         }} className={`absolute w-0 h-full top-0 left-0 bg-[#1C538E]`}></span>
-                        <div className="w-full p-2 h-full relative z-10 text-left flex justify-between items-center" ><span>{value}</span>{<span>{poll.votes[i] && ((poll.votes[i] / totalVotes) * 100).toFixed()}%</span>}</div>
+                        <div className="w-full p-2 h-full relative z-10 text-left flex justify-between items-center first-letter:capitalize" ><span>{value}</span>{<span>{poll.votes[i] && ((poll.votes[i] / totalVotes) * 100).toFixed()}%</span>}</div>
                     </div>
                 }) :
                     poll.options.map((value: string, i: number) => {
@@ -95,7 +96,7 @@ const Voting = () => {
                             <span style={{
                                 width: `${voted ? ((poll.votes[i] / totalVotes) * 100).toFixed() : 0}%`
                             }} className={`absolute w-0 h-full top-0 left-0 bg-[#1C538E]`}></span>
-                            <button disabled={voted} className="w-full p-2 h-full relative z-10 text-left flex justify-between items-center" type="button" onClick={() => handle(i)}><span>{value}</span>{voted && <span>{((poll.votes[i] / totalVotes) * 100).toFixed()}%</span>}</button></div>
+                            <button disabled={voted} className="w-full p-2 h-full relative z-10 text-left flex justify-between items-center first-letter:capitalize" type="button" onClick={() => handle(i)}><span>{value}</span>{voted && <span>{((poll.votes[i] / totalVotes) * 100).toFixed()}%</span>}</button></div>
                     })}
                 {poll.title && isCreatedByCurrentUser && <button type="button" style={{
                     opacity: closing ? "opacity-50" : "opacity-100"

@@ -55,7 +55,7 @@ const Create = () => {
         }).then(() => {
             setCreating(false)
             Cookies.set('pollCreatedByCurrentUser', "true", { path: newPollKey ? `/${newPollKey}` : "" })
-            navigate(`/${newPollKey}`)
+            navigate(`/${newPollKey}`, { state: { pollCreatedByCurrentUser: true } })
         }).catch(err => {
             setCreating(true)
             console.error(err)
