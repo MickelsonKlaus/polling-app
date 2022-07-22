@@ -14,7 +14,7 @@ interface Poll {
 
 const Voting = () => {
     let { state }: any = useLocation()
-    let isCreatedByCurrentUser = Cookies.get('pollCreatedByCurrentUser') ? true : state.pollCreatedByCurrentUser ? true : false
+    let isCreatedByCurrentUser = Cookies.get('pollCreatedByCurrentUser') ? true : state?.pollCreatedByCurrentUser ? true : false
     let params = useParams();
     let [voted, setVoted] = useState<boolean>(false);
     let [closing, setClosing] = useState<boolean>(false);
