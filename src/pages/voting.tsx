@@ -69,7 +69,7 @@ const Voting = () => {
             [`polls/${params.pollId}`]: state
         };
         update(ref(db), updates).then(() => {
-            Cookies.set('voted', "true", { path: params.pollId ? `/${params.pollId}` : "" })
+            Cookies.set('voted', "true", { path: params.pollId ? `/${params.pollId}` : "", expires: 7 })
             setClosing(false)
             setClosed(state.closed)
         }).catch(err => {
@@ -102,6 +102,7 @@ const Voting = () => {
                     opacity: closing ? "opacity-50" : "opacity-100"
                 }} disabled={closing} className="outline-none mt-10 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200" onClick={handleToggle}>{closing ? poll.closed ? "Opening poll" : "Closing poll" : closed ? "Poll closed, Re-open" : "Close poll"}</button>}
                 {(isCreatedByCurrentUser || poll.closed || Cookies.get('voted')) && <p className="text-white mt-5 text-xs font-medium">Votes: {totalVotes}</p>}
+                {(isCreatedByCurrentUser) && <p className="text-white mt-3 text-xs font-medium">Cookies expires after 7 days i.e you'll no longer be able to close this poll</p>}
                 {poll.closed && <p className="text-white mt-3 text-xs font-medium opacity-70">This poll has been closed. Here are the results</p>}</> : loading && !err ? <p className="text-white mt-5 font-medium text-center">Loading...</p> : <p className="text-white mt-5 font-medium text-center">Poll not found</p>}
         </section>
     )

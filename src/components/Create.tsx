@@ -54,12 +54,31 @@ const Create = () => {
             votes
         }).then(() => {
             setCreating(false)
-            Cookies.set('pollCreatedByCurrentUser', "true", { path: newPollKey ? `/${newPollKey}` : "" })
+            Cookies.set('pollCreatedByCurrentUser', "true", { path: newPollKey ? `/${newPollKey}` : "", expires: 7 })
             navigate(`/${newPollKey}`, { state: { pollCreatedByCurrentUser: true } })
         }).catch(err => {
             setCreating(true)
             console.error(err)
         });
+    }
+
+    const handleClose = (e: React.MouseEvent<HTMLImageElement>, index: number) => {
+        let target = e.currentTarget
+        let parent = target.parentElement?.parentElement
+        let targetParent = target.parentElement;
+        let parentSibling = target.parentElement?.previousElementSibling
+
+        if (parent) {
+            targetParent?.remove()
+            if (parentSibling) {
+                parentSibling?.remove()
+            }
+
+            setOptions((prevState): string[] => {
+                let state = prevState.filter((opt, i) => i !== index)
+                return state
+            })
+        }
     }
 
     return (
@@ -68,7 +87,7 @@ const Create = () => {
                 <textarea required name="question" onChange={handleTyping} rows={1} placeholder="Create a Poll" className="text-xl block w-full bg-transparent pb-3 overflow-hidden sm:text-2xl lg:text-3xl mb-10 text-gray-400 border-b-2 border-gray-400 px-3 outline-none resize-none first-letter:capitalize break-words h-auto" />
                 <div className="grid grid-cols-1 sm:grid-cols-[1fr,auto,1fr] gap-5">
                     {Array(optionNum).fill("").map((input: string, i: number) => {
-                        return <Input key={i} handleChange={handleChange} index={i} />
+                        return <Input key={i} handleChange={handleChange} handleClose={handleClose} index={i} />
                     })}
                 </div>
                 <button type="button" disabled={creating} className="outline-none mt-5 w-fit text-sm text-gray-400 transition-transform hover:scale-105 duration-200" onClick={addOption}>+ Add option</button>
