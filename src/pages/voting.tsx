@@ -82,7 +82,7 @@ const Voting = () => {
     return (
         <section className="max-w-lg mx-auto block">
             <Link to="/" className="text-xs block mb-5 font-medium text-white bg-[#1C538E] w-fit p-2 opacity-70 transition-transform hover:scale-105 duration-200 hover:opacity-100">Back to home</Link>
-            {!loading && !err ? <>{poll.title && <h1 className="text-xl font-medium block w-full bg-transparent pb-3 sm:text-2xl lg:text-3xl mb-10 text-white border-b border-gray-400 first-letter:capitalize">{poll.title}</h1>}
+            {!loading && !err ? <> {poll.closed && <p className="text-white mt-3 mb-5 text-xs font-medium opacity-70">This poll has been closed. Here are the results</p>}{poll.title && <h1 className="text-xl font-medium block w-full bg-transparent pb-3 sm:text-2xl lg:text-3xl mb-10 text-white border-b border-gray-400 first-letter:capitalize">{poll.title}</h1>}
                 {((isCreatedByCurrentUser || poll.closed) || Cookies.get('voted')) ? poll.options.map((value: string, i: number) => {
                     return <div key={i} className="block w-full text-white font-medium mb-3 rounded-sm text-sm  border border-[#1C538E] relative">
                         <span style={{
@@ -100,10 +100,10 @@ const Voting = () => {
                     })}
                 {poll.title && isCreatedByCurrentUser && <button type="button" style={{
                     opacity: closing ? "opacity-50" : "opacity-100"
-                }} disabled={closing} className="outline-none mt-10 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200" onClick={handleToggle}>{closing ? poll.closed ? "Opening poll" : "Closing poll" : closed ? "Poll closed, Re-open" : "Close poll"}</button>}
+                }} disabled={closing} className="outline-none mt-10 w-fit block mx-auto text-sm bg-[#1C538E] text-white py-2 px-5 rounded-sm transition-transform hover:scale-105 duration-200" onClick={handleToggle}>{closing ? poll.closed ? "Closing poll" : "Opening poll" : closed ? "Poll closed, Re-open" : "Close poll"}</button>}
                 {(isCreatedByCurrentUser || poll.closed || Cookies.get('voted')) && <p className="text-white mt-5 text-xs font-medium">Votes: {totalVotes}</p>}
                 {(isCreatedByCurrentUser) && <p className="text-white mt-3 text-xs font-medium">Cookies expires after 7 days i.e you'll no longer be able to close this poll</p>}
-                {poll.closed && <p className="text-white mt-3 text-xs font-medium opacity-70">This poll has been closed. Here are the results</p>}</> : loading && !err ? <p className="text-white mt-5 font-medium text-center">Loading...</p> : <p className="text-white mt-5 font-medium text-center">Poll not found</p>}
+            </> : loading && !err ? <p className="text-white mt-5 font-medium text-center">Loading...</p> : <p className="text-white mt-5 font-medium text-center">Poll not found</p>}
         </section>
     )
 }
