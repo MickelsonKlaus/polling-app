@@ -10,7 +10,7 @@ const Input = ({ handleChange, handleClose, index }: Props) => {
 
     return (
         <>
-            {index % 2 !== 0 && <span className="text-gray-400 text-lg hidden sm:block text-center">or</span>}
+            {/* {index % 2 !== 0 && <span className="text-gray-400 text-lg hidden sm:block text-center">or</span>} */}
             <div className="relative flex justify-between items-center gap-2">
                 <img src="/1544641784.svg" alt="close" className='h-4 w-4 max-w-[1rem] cursor-pointer flex-auto' onClick={(e) => handleClose(e, index)} />
                 <input type="text" name="" onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
